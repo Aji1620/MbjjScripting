@@ -17,7 +17,7 @@ FILENAME="$(find *_upcc.txt -newermt $xtanggal ! -newermt $ytanggal)"
 
 for i in $FILENAME
 do
-	COUNTLINE=$(wc -l $i |awk '{print$1}')
+	COUNTLINE=$(wc -l <$i)
 	xFILENAME="$(basename $i |awk -F. '{print$1}')"
 	
 	if [[ $COUNTLINE -gt 1000000 && $COUNTLINE -lt 1200000 ]]
