@@ -20,15 +20,21 @@ do
 	COUNTLINE=$(wc -l $i |awk '{print$1}')
 	xFILENAME="$(basename $i |awk -F. '{print$1}')"
 	
-	if [ $COUNTLINE -ge 699999 ]
+	if [[ $COUNTLINE -gt 1000000 && $COUNTLINE -lt 1200000 ]]
+	then
+		sort -t ',' -k 2,2 -u $i >${xFILENAME}_sorted.tmp
+		split -n l/2 -d --additional-suffix=.txt ${xFILENAME}_sorted.tmp ${xFILENAME}_sorted_
+		rm ${xFILENAME}_sorted.tmp
+		echo "File $i sorted. Dan sudah di split."
+	elif [ $COUNTLINE -ge 699999 ]
 	then
 		sort -t ',' -k 2,2 -u $i >${xFILENAME}_sorted.tmp
 		split -l 500000 -d --additional-suffix=.txt ${xFILENAME}_sorted.tmp ${xFILENAME}_sorted_
 		rm ${xFILENAME}_sorted.tmp
-		echo "File $i sorted. Sudah selesai di split"
+		echo "File $i sorted. Dan sudah di split."
 	elif [ $COUNTLINE -lt 699999 ]
 	then
 		sort -t ',' -k 2,2 -u $i >${xFILENAME}_sorted.txt
-		echo "File $i sorted. Tidak perlu di split"
+		echo "File $i sorted. Tidak perlu di split."
 	fi
 done
