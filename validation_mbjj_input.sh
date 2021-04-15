@@ -1,7 +1,7 @@
 tanggal=$1
 type=$2
 
-if [[ -z $tanggal  || -z $type ]]
+if [[ -z $tanggal || -z $type ]]
 then
 	echo "Parameter Kosong"
 	echo "Silahkan input parameter tanggal dan tipe"
