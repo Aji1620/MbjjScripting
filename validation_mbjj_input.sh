@@ -20,7 +20,7 @@ case "${type}" in
         echo 'FILENAME|MSISDN DUPLIKAT|TOTAL MSISDN'
         for i in ${FILENAME}; do
             echo -n "$(basename ${i})|"
-            echo -n "$(awk -F, '{print $1}' ${i} | sort | uniq -cd | wc -l | numfmt --g)|"
+            echo -n "$(awk -F ',' '{print $1}' ${i} | sort | uniq -cd | wc -l | numfmt --g)|"
             echo "$(wc -l <${i} | numfmt --g)"
         done
     } | printTable '|'
@@ -30,7 +30,7 @@ case "${type}" in
         echo 'FILENAME|PDID DUPLIKAT|TOTAL PDID'
         for i in ${FILENAME}; do
             echo -n "$(basename ${i})|"
-            echo -n "$(awk -F, '{print$2}' ${i} | sort | uniq -cd | wc -l | numfmt --g)|"
+            echo -n "$(awk -F ',' '{print$2}' ${i} | sort | uniq -cd | wc -l | numfmt --g)|"
             echo "$(wc -l <${i} | numfmt --g)"
         done
     } | printTable '|'
