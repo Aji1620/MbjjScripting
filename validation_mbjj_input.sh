@@ -7,15 +7,15 @@ xtanggal="${tanggal:0:4}-${tanggal:4:2}-${tanggal:6:2}"
 ytanggal="$(date -d "${xtanggal} +1 days" '+%Y-%m-%d')"
 
 cd /data4/itops/upcc_script
-if [ -t 0 ]; then
+if [ ! -t 0 ]; then
+    FILENAME="$(cat)"
+else
     if [ "${#}" -lt '2' ]; then
         echo -e "Cannot continue. The given parameter is not complete"
         exit 1
     else
         FILENAME="$(find -maxdepth '1' -type 'f' -name '*_upcc.txt' -newermt "${xtanggal}" ! -newermt "${ytanggal}" -exec ls -1 {} +)"
     fi
-else
-    FILENAME="$(cat)"
 fi
 
 case "${type}" in
