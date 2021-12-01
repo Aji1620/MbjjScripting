@@ -1,14 +1,19 @@
-#!/bin/bash
+#!/usr/bin/env bash
 datex="${1}"
 xtanggal="${datex:0:4}-${datex:4:2}-${datex:6:2}"
 ytanggal="$(date -d "${tanggal} +1 days" '+%Y-%m-%d')"
 
-if [ -z "${datex}" ]; then
-    echo 'Cannot continue. The given parameter is not complete'
-    exit 1
-fi
 cd /data4/itops/upcc_script
-FILENAME="$(find -maxdepth '1' -type 'f' -name '*_upcc.txt' -newermt "${xtanggal}" ! -newermt "${ytanggal}" -exec ls -1 {} +)"
+if [ -t 0 ]; then
+    if [ -z "${datex}" ]; then
+        echo -e "Cannot continue. The given parameter is not complete"
+        exit 1
+    else
+        FILENAME="$(find -maxdepth '1' -type 'f' -name '*_upcc.txt' -newermt "${xtanggal}" ! -newermt "${ytanggal}" -exec ls -1 {} +)"
+    fi
+else
+    FILENAME="$(cat)"
+fi
 
 for i in ${FILENAME}; do
     COUNTLINE="$(wc -l <${i})"
